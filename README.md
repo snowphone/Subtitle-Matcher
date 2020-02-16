@@ -29,6 +29,7 @@ videoS01E11.mp4 | videoE11.srt
 videoS01E12.mp4 | videoE12.srt
 
 Even though video file's number doesn't correspond to its subtitle, it's relative order fits and the program can automatically rename them.
+
 video file list | subtitle list
 ----------------|-------------
 another_video_1.mp4 | sub101.srt
