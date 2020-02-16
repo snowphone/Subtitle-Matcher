@@ -1,7 +1,7 @@
 {
   "name": "subtitle-matcher",
   "version": "1.0.0",
-  "description": "",
+  "description": "rename subtitles to its videos",
   "main": "index.js",
   "dependencies": {
     "argparse": "^1.0.10",
@@ -15,6 +15,7 @@
     "@types/node": "^13.7.1"
   },
   "scripts": {
+    "build": "tsc && echo 'compiltion done!' && pkg ./build/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Junoh Moon",
