@@ -1,8 +1,8 @@
 {
   "name": "subtitle-matcher",
   "version": "1.0.0",
-  "description": "rename subtitles to its videos",
-  "main": "index.js",
+  "description": "Rename subtitles to corresponding videos",
+  "main": "src/main.ts",
   "dependencies": {
     "argparse": "^1.0.10",
     "fs-extra": "^8.1.0",
@@ -15,7 +15,7 @@
     "@types/node": "^13.7.1"
   },
   "scripts": {
-    "build": "tsc && echo 'Compilation done!' && pkg ./build/*",
+    "build": "tsc && echo 'Compilation done!' && pkg -t latest-win-x64,latest-linux-x64 -o subtitle-matcher ./build/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Junoh Moon",
