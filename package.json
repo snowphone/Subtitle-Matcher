@@ -12,12 +12,26 @@
   "devDependencies": {
     "@types/argparse": "^1.0.38",
     "@types/fs-extra": "^8.0.1",
-    "@types/node": "^13.7.1"
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.1",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0"
   },
   "scripts": {
     "build": "tsc && echo 'Compilation done!' && pkg -t latest-win-x64,latest-linux-x64 -o subtitle-matcher ./build/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Junoh Moon",
-  "license": "ISC"
+  "license": "ISC",
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "moduleFileExtensions": ["ts", "tsx", "js", "json", "jsx", "node"],
+    "globals": {
+      "ts-jest": {
+        "diagnostic": true
+      }
+    }
+  }
 }
