@@ -42,14 +42,9 @@ another_video_3.mp4 | sub1.episode03.srt
 Even though video file's number doesn't correspond to its subtitle,
 it's relative order is sorted, therefore the program can automatically rename them.
 
-## How to build an executable
-```
-npm install
-npm run build
-```
 
 ## How to run
 ```
-./<compiled program> -f <folder path> -v <video extension> -s <subtitle extension>
+./subtitle_matcher.py -f <folder path> -v <video extension> -s <subtitle extension>
 ```
-or `./<compiled program> --help`.
+or `./subtitle_matcher.py --help`.
