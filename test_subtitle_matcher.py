@@ -12,5 +12,11 @@ def test_sort():
 
 	assert sorted(src, key=sm.NumericalSorter.fn) == expected
 
+def test_rename():
+	s = sm.SubtitleMatcher("mp4", "srt", "./", "ko")
+
+	src = "video1.helloworld.mp4"
+	expected = "video1.helloworld.ko.srt"
+	assert s._rename(src) == expected
 
 
