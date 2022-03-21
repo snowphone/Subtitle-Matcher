@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser
-from re import compile, split
 import os
+from re import compile, split
 from typing import Literal, Optional
+
+import tabulate
 
 
 class SubtitleMatcher:
@@ -26,11 +28,14 @@ class SubtitleMatcher:
 		if(len(videos) != len(subtitles)):
 			raise RuntimeError("len(videos) != len(subtitles)")
 
+		line_list = []
 		for v, s in zip(videos, subtitles):
 			subtitle_ext = s.split('.')[-1]
 			new_name = self._rename(v, subtitle_ext)
 			os.rename(s, new_name)
-			print(f"{os.path.basename(s)} -> {os.path.basename(new_name)}")
+
+			line_list.append( (os.path.basename(s) , os.path.basename(new_name)))
+		print(tabulate.tabulate(line_list, headers=["From", "To"], tablefmt="fancy_grid"))
 	
 	def _rename(self, src: str, subtitle_ext: Literal["smi", "srt"]) -> str:
 		if self.suffix:
@@ -41,14 +46,13 @@ class SubtitleMatcher:
 class NumericalSorter:
 	@staticmethod
 	def fn(s: str):
-		return [NumericalSorter._to_int(i) for i in split(r"(\d+)", s)]
+		return [NumericalSorter._try_int(i) for i in split(r"(\d+)", s)]
 	
 	@staticmethod
-	def _to_int(n: str):
-		try:
+	def _try_int(n: str):
+		if n.isdecimal():
 			return int(n)
-		except:
-			return n
+		return n
 
 
 
