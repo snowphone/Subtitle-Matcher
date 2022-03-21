@@ -45,6 +45,6 @@ it's relative order is sorted, therefore the program can automatically rename th
 
 ## How to run
 ```
-./subtitle_matcher.py -f <folder path> -v <video extension> -s <subtitle extension>
+./subtitle_matcher.py -f <folder path> -v <video extension> [--suffix <suffix just before extension>]
 ```
 or `./subtitle_matcher.py --help`.
