@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser
 import os
+from pathlib import Path
 from re import compile, split
 from typing import Literal, Optional
 
@@ -16,37 +17,41 @@ class SubtitleMatcher:
 		self.suffix = suffix
 
 	def match(self):
-		items = os.listdir(self.folder)
-		items = [ os.path.join(self.folder, it) for it in items ]
-
-		videos = [it for it in items if it.endswith(self.video_ext)]
-		subtitles = [it for it in items if it.endswith("smi") or it.endswith("srt")]
-
-		videos.sort(key=NumericalSorter.fn)
-		subtitles.sort(key=NumericalSorter.fn)
-
-		if(len(videos) != len(subtitles)):
-			raise RuntimeError("len(videos) != len(subtitles)")
+		videos, subtitles = self._get_file_list()
 
 		line_list = []
 		for v, s in zip(videos, subtitles):
 			subtitle_ext = s.split('.')[-1]
-			new_name = self._rename(v, subtitle_ext)
+			new_name = self._get_new_name(v, subtitle_ext)  # type: ignore
 			os.rename(s, new_name)
 
 			line_list.append( (os.path.basename(s) , os.path.basename(new_name)))
 		print(tabulate.tabulate(line_list, headers=["From", "To"], tablefmt="fancy_grid"))
+
+	def _get_file_list(self):
+		items = os.listdir(self.folder)
+		items = [ str(Path(self.folder).joinpath(it)) for it in items ]
+
+		videos = [it for it in items if it.endswith(self.video_ext)]
+		subtitles = [it for it in items if it.endswith(".smi") or it.endswith(".srt")]
+
+		videos.sort(key=NumericalSorter())
+		subtitles.sort(key=NumericalSorter())
+
+		if(len(videos) != len(subtitles)):
+			raise RuntimeError("len(videos) != len(subtitles)")
+
+		return videos, subtitles
 	
-	def _rename(self, src: str, subtitle_ext: Literal["smi", "srt"]) -> str:
+	def _get_new_name(self, src: str, subtitle_ext: Literal["smi", "srt"]) -> str:
 		if self.suffix:
 			return self.regexp.sub(f"{self.suffix}.{subtitle_ext}", src)
 		return self.regexp.sub(subtitle_ext, src)
 
 
 class NumericalSorter:
-	@staticmethod
-	def fn(s: str):
-		return [NumericalSorter._try_int(i) for i in split(r"(\d+)", s)]
+	def __call__(self, s: str):
+		return [self._try_int(i) for i in split(r"(\d+)", s)]
 	
 	@staticmethod
 	def _try_int(n: str):
