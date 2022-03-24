@@ -24,6 +24,9 @@ lib-cov
 coverage
 *.lcov
 
+# pytest coverage
+.coverage
+
 # nyc test coverage
 .nyc_output
 
@@ -184,3 +187,9 @@ fabric.properties
 .idea/vcs.xml
 .idea/
 build/
+
+# venv
+.venv
+
+# cache
+**/__pycache__
