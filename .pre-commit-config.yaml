@@ -1,7 +1,32 @@
 repos:
+  # Format code.
   - repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
       - id: black
+        # Pre-commit does not allow any modification during pre-commit hook by default
+        # Check out https://stackoverflow.com/a/58459499
+        entry: bash -c 'black "$@"; git add -u' --
         args:
           - --line-length=79
+  # Sort imports.
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        entry: bash -c 'isort "$@"; git add -u' --
+        args:
+          - --profile black
+  # Remove unused imports.
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        entry: bash -c 'autoflake "$@"; git add -u' --
+        args:
+          - --in-place
+  # Examine whether PEP8 coding style is satisfied.
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from argparse import ArgumentParser
 import os
+from argparse import ArgumentParser
 from pathlib import Path
 from re import compile, split
 from typing import Literal, Optional
