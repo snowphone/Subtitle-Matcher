@@ -3,3 +3,6 @@ pytest-mock
 pytest-cov
 yapf
 rope
+pre-commit
+black
+flake8
