@@ -1,5 +1,7 @@
 # Subtitle Matcher
 
+[![Python application](https://github.com/snowphone/Subtitle-Matcher/actions/workflows/python-app.yaml/badge.svg)](https://github.com/snowphone/Subtitle-Matcher/actions/workflows/python-app.yaml)
+
 Often, videos and its subtitles don't match.
 It can be fixed with regex command like `rename`, but it's quite cumbersome.
 So, I created a simple program that automatically match subtitles and videos.
