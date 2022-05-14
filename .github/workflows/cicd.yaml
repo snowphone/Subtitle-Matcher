@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  REGISTRY: hub.sixtyfive.me
+  NAME: match_subtitles
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -56,15 +60,22 @@ jobs:
         name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: hub.sixtyfive.me
+          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+      - 
+        name: short-sha
+        uses: benjlevesque/short-sha@v1.2
+        id: short-sha
       -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./Dockerfile
+          #context: .
+          #file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: match_subtitles:$(date +%s)
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.NAME }}:${{ steps.short-sha.outputs.sha }}
+
