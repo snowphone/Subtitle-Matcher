@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10-alpine
 COPY requirements.txt ./requirements.txt
 COPY subtitle_matcher.py /usr/bin/match_subtitles
 
