@@ -1,32 +1,38 @@
 repos:
-  # Format code.
-  - repo: https://github.com/psf/black
-    rev: 22.3.0
-    hooks:
-      - id: black
-        # Pre-commit does not allow any modification during pre-commit hook by default
-        # Check out https://stackoverflow.com/a/58459499
-        entry: bash -c 'black "$@"; git add -u' --
-        args:
-          - --line-length=79
-  # Sort imports.
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
-    hooks:
-      - id: isort
-        entry: bash -c 'isort "$@"; git add -u' --
-        args:
-          - --profile black
   # Remove unused imports.
   - repo: https://github.com/myint/autoflake
-    rev: v1.4
+    rev: v2.0.2
     hooks:
       - id: autoflake
         entry: bash -c 'autoflake "$@"; git add -u' --
         args:
           - --in-place
+          - --remove-all-unused-imports
+  # Format code.
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args:
+          - --skip-string-normalization
+  # Sort imports.
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.11.5
+    hooks:
+      - id: isort
+        args:
+          - --profile=black
+          - --force-grid-wrap=2
+          - --multi-line=VERTICAL_HANGING_INDENT
+  # Trim trailing whitespaces
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: trailing-whitespace
   # Examine whether PEP8 coding style is satisfied.
   - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.1
+    rev: 3.9.2
     hooks:
       - id: flake8
+        args:
+          - --max-line-length=88
