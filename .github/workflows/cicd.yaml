@@ -51,7 +51,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -v
-  
+
   publish:
     needs: ["check", "test"]
     runs-on: ubuntu-latest
@@ -63,13 +63,13 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-      - 
+      -
         name: short-sha
-        uses: benjlevesque/short-sha@v1.2
+        uses: benjlevesque/short-sha@v2.2
         id: short-sha
       -
         name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           #context: .
           #file: ./Dockerfile
